@@ -1,52 +1,70 @@
-var queen = {
-  direction: "s",
-  position: {
-    x: 4,
-    y: 0
-  },
-  whereAbout: []
-};
-
+var queen = { direction: "s", position: { x: 0, y: 4 } };
+var input = prompt("Enter your direction and steps like N5 S2....");
+if (input.length == 3) {
+  var steps = Number(input.slice(2));
+  var direction = input.slice(0, 2).toUpperCase();
+} else if (input.length == 2) {
+  var steps = Number(input.slice(1));
+  var direction = input.slice(0, 1).toUpperCase();
+} else {
+  alert("ALERT .......\nInput range should be 2 to 3 only...");
+  var input = prompt("Enter your direction and steps like N5 S2....");
+}
+changeDirection(direction, steps);
 function changeDirection(direction, steps) {
   switch (direction) {
-    case direction:
-      queen.direction = direction;
+    case "S":
+      queen.position.x += steps;
+      console.log("Now your position is " + queen.position.x, queen.position.y);
+      break;
+    case "N":
+      temp = queen.position.x;
+      if (checkBoundary(temp) == true) {
+        queen.position.x -= steps;
+        console.log(
+          "Now your position is " + queen.position.x,
+          queen.position.y
+        );
+      } else {
+        console.log("your position is outof boundary so invalid position..");
+      }
+      break;
+    case "E":
+      queen.position.y += steps;
+      console.log("Now your position is " + queen.position.x, queen.position.y);
+      break;
+    case "W":
+      queen.position.y += steps;
+      console.log("Now your position is " + queen.position.x, queen.position.y);
+      break;
+    case "NE":
+      queen.position.x += steps;
+      queen.position.y += steps;
+      console.log("Now your position is " + queen.position.x, queen.position.y);
+      break;
+    case "SW":
+      queen.position.x += steps;
+      queen.position.y -= steps;
+      console.log("Now your position is " + queen.position.x, queen.position.y);
+      break;
+    case "NW":
+      queen.position.x -= steps;
+      queen.position.y -= steps;
+      console.log("Now your position is " + queen.position.x, queen.position.y);
+      break;
+    case "SE":
+      queen.position.x += steps;
+      queen.position.y += steps;
+      console.log("Now your position is " + queen.position.x, queen.position.y);
       break;
     default:
-      queen.direction = "s";
+      console.log("your direction is invalid ....please enter valid diretion");
   }
-  jumpMoveForward(steps);
-  updatePosition();
 }
-
-function moveForward() {
-  if (queen.direction === "S") {
-    queen.position.y = queen.position.y + 1;
-  } else if (queen.direction === "N") {
-    queen.position.y = queen.position.y - 1;
+function checkBoundary(temp) {
+  if (temp == queen.position.x) {
+    return false;
+  } else {
+    return true;
   }
-
-  function jumpMoveForward(steps) {
-    if (queen.direction === "S") {
-      queen.position.y = queen.position.y + steps;
-    } else if (queen.direction === "N") {
-      queen.position.y = queen.position.y - steps;
-    } else if (queen.direction === "E") {
-      queen.position.x = queen.position.x + steps;
-    } else if (queen.direction === "W") {
-      queen.position.x = queen.position.x - steps;
-    } else if (queen.direction === "NE") {
-      queen.position.y = queen.position.y - steps;
-      queen.position.x = queen.position.x + steps;
-    }
-    if (queen.direction === "NW") {
-      queen.position.y = queen.position.y - steps;
-      queen.position.x = queen.position.x - steps;
-    } else if (queen.direction === "SE") {
-      queen.position.y = queen.position.y + steps;
-      queen.position.x = queen.position.x + steps;
-    } else queen.position.y = queen.position.y + steps;
-    queen.position.x = queen.position.x - steps;
-  }
-  console.log("position:", `(${queen.position.x},${queen.position.y})`);
 }
